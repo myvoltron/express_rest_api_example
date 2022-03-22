@@ -10,6 +10,7 @@ const posts = [
 
 app.set('port', 8083); 
 
+// body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); 
 
@@ -21,7 +22,7 @@ app.get('/', (req, res) => {
 
 // Index
 // 글 목록을 제공하는 라우팅
-app.get('/api/post', (req, res) => {
+app.get('/api/posts', (req, res) => {
 
     // 글 정보 반환
     res.json(posts); 
@@ -29,7 +30,7 @@ app.get('/api/post', (req, res) => {
 
 // Show
 // Path Variable 을 이용한 글 세부정보 라우팅
-app.get('/api/post/:id', (req, res) => {
+app.get('/api/posts/:id', (req, res) => {
 
     const postId = Number(req.params.id); 
     const post = posts.filter(post => {
@@ -42,7 +43,7 @@ app.get('/api/post/:id', (req, res) => {
 
 // Create
 // 글 추가 라우팅 
-app.post('/api/post', (req, res) => {
+app.post('/api/posts', (req, res) => {
 
     const title = req.body.title;
     const content = req.body.content; 
@@ -64,7 +65,7 @@ app.post('/api/post', (req, res) => {
 
 // Update
 // 글 수정 라우팅
-app.patch('/api/post/:id', (req, res) => {
+app.put('/api/posts/:id', (req, res) => {
 
     const title = req.body.title;
     const content = req.body.content; 
@@ -92,7 +93,7 @@ app.patch('/api/post/:id', (req, res) => {
 
 // Delete
 // 글 삭제 라우팅
-app.delete('/api/post/:id', (req, res) => {
+app.delete('/api/posts/:id', (req, res) => {
 
     const id = parseInt(req.params.id);
     if(!id) {
