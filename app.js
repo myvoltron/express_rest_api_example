@@ -2,7 +2,7 @@ const express = require('express');
 const app = express(); 
 
 // 임시 데이터
-const posts = [
+let posts = [
     { id: 1, title: 'title1', content: 'content1'},
     { id: 2, title: 'title2', content: 'content2'},
     { id: 3, title: 'title3', content: 'content3'},
@@ -75,7 +75,7 @@ app.put('/api/posts/:id', (req, res) => {
         return res.json({ success: false, message: "올바른 글 번호를 입력해주세요" }); 
     }
 
-    const updatedPosts = posts.map(post => {                 // map을 통해 해당 id의 글이 수정된 버전의 배열을 반환한다. (원본배열은 그대로)
+    posts = posts.map(post => {                 // map을 통해 해당 id의 글이 수정된 버전의 배열을 반환한다. 
         if(post.id === id) {
             post.title = title; 
             post.content = content; 
@@ -88,7 +88,7 @@ app.put('/api/posts/:id', (req, res) => {
         }
     }); 
 
-    res.json({ success: true, updatedPosts }); 
+    res.json({ success: true, posts }); 
 }); 
 
 // Delete
@@ -100,13 +100,13 @@ app.delete('/api/posts/:id', (req, res) => {
         return res.json({ success: false, message: "올바른 글 번호를 입력해주세요" }); 
     }
 
-    const deletedPosts = posts.filter(post => { // filter를 통해 해당 id의 글이 삭제된 배열을 반환한다. (원본배열은 그대로)
+    posts = posts.filter(post => { // filter를 통해 해당 id의 글이 삭제된 배열을 반환한다.
         if(post.id === id) return false; 
 
         return true; 
     });
 
-    res.json({ success: true, deletedPosts }); 
+    res.json({ success: true, posts }); 
 }); 
 
 
